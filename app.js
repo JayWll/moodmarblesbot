@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const https = require('https');
 const express = require('express');
 const app = express();
 
@@ -41,45 +40,23 @@ app.get('/bot/trigger', (req, res) => {
         break;
     }
 
-    // Define the options for the https request
-    var options = {
-      host: 'chat.googleapis.com',
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      }
+    // Define the options for the API request
+    const options = {
+      method: 'post',
+      body: JSON.stringify(message),
+      headers: { 'Content-Type': 'application/json' }
     };
 
-    // Send the message to AUTO_TEAM_URL
-    options.path = process.env.AUTO_TEAM_URL;
-    sendRequest(options, message);
+    // Send the message to the AUTO_TEAM_URL endpoint
+    fetch('https://chat.googleapis.com' + process.env.AUTO_TEAM_URL, options);
 
-    // Send the message to FED_TEAM_URL
-    options.path = process.env.FED_TEAM_URL;
-    sendRequest(options, message);
+    // Send the message to the FED_TEAM_URL endpoint
+    fetch('https://chat.googleapis.com' + process.env.FED_TEAM_URL, options);
 
     // Return a response to the web request
     res.status(200).send('OK').end();
   });
 });
-
-// Function to send a HTTP request
-const sendRequest = (opt, msg) => {
-  var request = https.request(opt, function(response) {
-    var responseString = "";
-
-    response.on('data', function(data) {
-      responseString += data;
-    });
-
-    response.on('end', function() {
-      console.log(responseString);
-    });
-  });
-
-  request.write(JSON.stringify(msg));
-  request.end();
-}
 
 // Function to find out if a date is a public holiday in Alberta
 const isaholiday = (isodate, callback) => {
