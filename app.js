@@ -5,6 +5,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/test', (req, res) => {
+  var now = new Date();
+  isaholiday(now.toISOString().substr(0, 10), (holiday) => {
+    res.send(holiday);
+  })
+})
+
 app.get('/bot/trigger', (req, res) => {
   if (!req.headers['moodmarbles-key'] || req.headers['moodmarbles-key'] != process.env.AUTH_KEY) {
     return res.status(401).send('Authorization header not found').end();
@@ -53,7 +60,8 @@ app.get('/bot/trigger', (req, res) => {
     .end();
 });
 
-function sendRequest(opt, msg) {
+// Function to send a HTTP request
+const sendRequest = (opt, msg) => {
   var https = require('https');
   var request = https.request(opt, function(response) {
     var responseString = "";
@@ -69,6 +77,19 @@ function sendRequest(opt, msg) {
 
   request.write(JSON.stringify(msg));
   request.end();
+}
+
+// Function to find out if a date is a public holiday in Alberta
+const isaholiday = (isodate, callback) => {
+  const url = 'https://calendarific.com/api/v2/holidays/?year=2020&country=ca&location=ca-ab&type=national,local&api_key=' + process.env.CALENDARIFIC_KEY;
+
+  fetch(url).then((res) => res.json()).then((json) => {
+    for(var i = 0; i < json.response.holidays.length; i++) {
+      if (json.response.holidays[i].date.iso == isodate) callback(true);
+    }
+
+    callback(false);
+  });
 }
 
 // Start the server
