@@ -65,7 +65,6 @@ app.get('/bot/trigger', (req, res) => {
 
 // Function to send a HTTP request
 const sendRequest = (opt, msg) => {
-  var https = require("https")
   var request = https.request(opt, function(response) {
     var responseString = "";
 
