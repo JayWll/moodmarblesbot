@@ -1,3 +1,5 @@
+const fetch = require('fetch');
+const https = require('https');
 const express = require('express');
 const app = express();
 
@@ -62,7 +64,6 @@ app.get('/bot/trigger', (req, res) => {
 
 // Function to send a HTTP request
 const sendRequest = (opt, msg) => {
-  var https = require('https');
   var request = https.request(opt, function(response) {
     var responseString = "";
 
