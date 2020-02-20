@@ -16,8 +16,10 @@ app.get('/bot/trigger', (req, res) => {
   // Check if today is a holiday
   const now = new Date();
   isaholiday(now.toISOString().substr(0, 10), (holiday) => {
-    // If today is a holiday, a Sunday or a Saturday, stop the request.
-    if (holiday || now.getDay() < 1 || now.getDay() > 5) return res.status(200).send("No message today").end();
+    // If today is a holiday, a Sunday or a Saturday, no message is required. Don't proceed any further.
+    if (holiday || now.getDay() < 1 || now.getDay() > 5) {
+      return res.status(200).send("No message today").end();
+    }
 
     // Build today's message
     var message = {};
