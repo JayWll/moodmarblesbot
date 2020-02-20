@@ -62,7 +62,7 @@ app.get('/bot/trigger', (req, res) => {
 
 // Function to find out if a date is a public holiday in Alberta
 const isaholiday = (isodate, callback) => {
-  const url = 'https://calendarific.com/api/v2/holidays/?year=2020&country=ca&location=ca-ab&type=national,local&api_key=' + process.env.CALENDARIFIC_KEY;
+  const url = 'https://calendarific.com/api/v2/holidays/?year=' + isodate.substr(0, 4) + '&country=ca&location=ca-ab&type=national,local&api_key=' + process.env.CALENDARIFIC_KEY;
 
   fetch(url).then((res) => res.json()).then((json) => {
     for(var i = 0; i < json.response.holidays.length; i++) {
