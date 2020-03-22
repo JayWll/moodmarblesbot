@@ -18,6 +18,9 @@ AUTO_TEAM_URL="/v1/spaces/..."
 FED_TEAM_URL="/v1/spaces/..."
 ```
 
+The app identifies public holidays using an API from [calendarific.com](https://calendarific.com) to fetch national and provincial holidays and check the
+current date against this.
+
 
 How is This Triggered?
 ----------------------
