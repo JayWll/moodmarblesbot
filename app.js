@@ -1,3 +1,4 @@
+const time = require('time');
 const fetch = require('node-fetch');
 const express = require('express');
 const app = express();
@@ -14,7 +15,9 @@ app.get('/bot/trigger', (req, res) => {
   }
 
   // Check if today is a holiday
-  const now = new Date();
+  const now = new time.Date();
+  now.setTimezone('America/Edmonton');
+  
   isaholiday(now.toISOString().substr(0, 10), (holiday) => {
     // If today is a holiday, a Sunday or a Saturday, no message is required. Don't proceed any further.
     if (holiday || now.getDay() < 1 || now.getDay() > 5) {

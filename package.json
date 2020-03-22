@@ -1,7 +1,4 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
   "name": "moodmarblesbot",
   "version": "1.0.0",
   "description": "A simple Node app that uses the Google Chat API to send a daily message to any room that has a webhook defined for the purpose.",
@@ -11,7 +8,8 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "time": "^0.12.0"
   },
   "engines": {
     "node": "10.x"
