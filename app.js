@@ -57,7 +57,7 @@ app.get('/bot/trigger', (req, res) => {
     
     // If it's the first business day of the month, change the message
     if (now.getDate() == 1 || (now.getDay() == 1 && now.getDate() <= 3)) {
-      message.text = "It's the start of a new month, <users/all>! Please head over to <https://moodmarbles.atb.com/|the TIE mood marbles app> and get your marble in the jar."
+      message.text = "🔴🟠🟡🟢 It's the start of a new month, <users/all>! Please head over to <https://moodmarbles.atb.com/|the TIE mood marbles app> and get your marble in the jar. 🟢🟡🟠🔴"
       options.body = JSON.stringify(message)
     }
 
