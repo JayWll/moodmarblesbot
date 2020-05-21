@@ -51,12 +51,18 @@ app.get('/bot/trigger', (req, res) => {
       body: JSON.stringify(message),
       headers: { 'Content-Type': 'application/json' }
     };
+    
+    // Send the message to the FED_TEAM_URL endpoint
+    fetch('https://chat.googleapis.com' + process.env.FED_TEAM_URL, options);
+    
+    // If it's the first business day of the month, change the message
+    if (now.getDate() == 1 || (now.getDay() == 1 && now.getDate() <= 3)) {
+      message.text = "It's the start of a new month, <users/all>! Please head over to <https://moodmarbles.atb.com/|the TIE mood marbles app> and get your marble in the jar."
+      options.body = JSON.stringify(message)
+    }
 
     // Send the message to the AUTO_TEAM_URL endpoint
     fetch('https://chat.googleapis.com' + process.env.AUTO_TEAM_URL, options);
-
-    // Send the message to the FED_TEAM_URL endpoint
-    fetch('https://chat.googleapis.com' + process.env.FED_TEAM_URL, options);
 
     // Return a response to the web request
     res.status(200).send('OK').end();
